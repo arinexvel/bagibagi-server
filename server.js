@@ -22,13 +22,14 @@ app.post("/bagibagi-webhook", async (req, res) => {
     console.log("🔥 NEW DONATION:", req.body);
 
     const donation = {
-        userName: req.body.userName,
-        amount: req.body.amount,
-        message: req.body.message ?? "",
-        isVerified: req.body.isVerified,
-        isAnonymous: req.body.isAnonymous
-    };
-
+    userName: req.body.name || "Anonymous",
+    amount: req.body.amount || 0,
+    message: req.body.message || "",
+    media: req.body.mediaShareUrl || "",
+    createdAt: req.body.created_at || "",
+    isAnonymous: req.body.isAnonymous || false
+};
+    
     // Kirim ke Roblox MessagingService
     const robloxRes = await fetch(
         `https://apis.roblox.com/messaging-service/v1/universes/${UNIVERSE_ID}/topics/${TOPIC}`,
@@ -60,3 +61,4 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
 });
+
