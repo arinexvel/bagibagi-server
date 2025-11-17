@@ -21,13 +21,14 @@ const TOPIC         = "BagibagiDonation";
 app.post("/bagibagi-webhook", async (req, res) => {
     console.log("🔥 NEW DONATION:", req.body);
 
-    const donation = {
-    userName: req.body.name || "Anonymous",
-    amount: req.body.amount || 0,
+   const donation = {
+    userName: req.body.userName || req.body.name || "Anonymous",
+    amount: req.body.amount,
     message: req.body.message || "",
-    media: req.body.mediaShareUrl || "",
-    createdAt: req.body.created_at || "",
-    isAnonymous: req.body.isAnonymous || false
+    isVerified: req.body.isVerified ?? true,
+    isAnonymous: req.body.isAnonymous ?? false,
+    mediaShareUrl: req.body.mediaShareUrl,
+    createdAt: req.body.created_at
 };
     
     // Kirim ke Roblox MessagingService
@@ -61,4 +62,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
 });
+
 
