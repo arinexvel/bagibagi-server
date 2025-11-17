@@ -1,4 +1,4 @@
-﻿import express from "express";
+import express from "express";
 import bodyParser from "body-parser";
 import fetch from "node-fetch";
 import dotenv from "dotenv";
@@ -21,7 +21,6 @@ const TOPIC         = "BagibagiDonation";
 app.post("/bagibagi-webhook", async (req, res) => {
     console.log("🔥 NEW DONATION:", req.body);
 
-    // data yang datang dari Bagibagi
     const donation = {
         userName: req.body.userName,
         amount: req.body.amount,
@@ -53,6 +52,11 @@ app.post("/bagibagi-webhook", async (req, res) => {
 // TEST
 app.get("/", (req, res) => res.send("Bagibagi → Roblox Adapter Running!"));
 
-app.listen(3000, () => {
-    console.log("🚀 Server running on port 3000");
+// =========================
+// IMPORTANT: RAILWAY FIX
+// =========================
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
 });
